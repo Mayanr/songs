@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { selectSong } from '../actions';
 
 class SongList extends Component {
     renderList() {
@@ -7,7 +8,9 @@ class SongList extends Component {
             return (
               <div className="item" key={song.title}>
                 <div className="right floated content">
-                <button className="ui button primary">
+                <button 
+                    className="ui button primary"
+                    onClick={() => this.props.selectSong(song)}>
                     Select
                 </button>
                 </div>
@@ -19,21 +22,24 @@ class SongList extends Component {
         });
     }
     render () {
-        console.log(this.props)
+        // console.log(this.props)
         return <div className="ui divided list">{this.renderList()}</div>;
     }
 }
 
 // WHAT IS HAPPENING IN THE mapStateToProps FUNCTION:
 // we are going to take out state object (essentially all of the data in our Redux strore), and we're going to run some calculation that will cause that data to show up as props inside of our componenet.
-const mapStateToProps = (state) => {
-    // state here will be our entire list of songs from the reducer & our currently selected song reducer
-    console.log(state);
+const mapStateToProps = state => {
+    // the state variable here will be our entire list of songs from the reducer & our currently selected song reducer
+    // console.log(state);
 
     return { songs: state.songs };
 }
 
-export default connect(mapStateToProps)(SongList);
+export default connect(mapStateToProps, {
+    // selectSong: selectSong <-- which can also be written as:
+    selectSong //this gets passed as a prop into our component
+})(SongList);
 
 // react-redux will always:
 // 1.) Import { connect } from 'react-redux';
