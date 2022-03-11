@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+// this is a static list (does not change), so no need to pass any arguments here
 const songsReducer = () => {
     return [
         { title: 'No Scrubs', duration: '4:05' },
@@ -9,6 +10,7 @@ const songsReducer = () => {
     ];
 };
 
+// this changes when an action takes place (a song is selected)
 const selectedSongReducer = (selectedSong = null, action) => {
     if(action.type === 'SONG_SELECTED') {
         return action.payload;
@@ -16,6 +18,7 @@ const selectedSongReducer = (selectedSong = null, action) => {
     return selectedSong
 };
 
+// these keys will show up inside of our state object
 export default combineReducers({
     songs: songsReducer,
     selectedSong: selectedSongReducer
